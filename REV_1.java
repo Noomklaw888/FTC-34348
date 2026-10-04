@@ -35,6 +35,7 @@ public class REV_1 extends LinearOpMode {
         waitForStart();
 
         // Loop continuously while the OpMode is running
+        telemetry.log().add("Entering opModeIsactive");
         while (opModeIsActive()) {
 
             // Arcade drive logic
@@ -66,11 +67,12 @@ public class REV_1 extends LinearOpMode {
 
             // Pollen pusher servo logic
             if (gamepad1.y) {
-                pservo.setPosition(0.0);
+                telemetry.log().add("set position 1.0");
+                pservo.setPosition(0.3);
             } else if (gamepad1.x || gamepad1.b) {
-                pservo.setPosition(0.5);
-            } else if (gamepad1.a) {
                 pservo.setPosition(0.0);
+                telemetry.log().add("set position 0.0");
+
             }
 
             // Send power to the motors
