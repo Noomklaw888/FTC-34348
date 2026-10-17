@@ -13,8 +13,9 @@ public class REV_1 extends LinearOpMode {
     private DcMotor intakeDrive = null;
     private DcMotor flyDrive = null;
     private Servo pservo = null;
-
-    @Override
+    private Servo feedo = null;
+    
+        @Override
     public void runOpMode() {
 
         // Connect variables to the names you set in "Configure Robot"
@@ -23,6 +24,7 @@ public class REV_1 extends LinearOpMode {
         intakeDrive = hardwareMap.get(DcMotor.class, "intake");
         flyDrive    = hardwareMap.get(DcMotor.class, "flywheel");
         pservo      = hardwareMap.get(Servo.class, "pservo");
+        feedo       = hardwareMap.get(Servo.class, "feedo");
 
         // Reverse one motor so both spin forward together
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -35,6 +37,7 @@ public class REV_1 extends LinearOpMode {
         waitForStart();
 
         // Loop continuously while the OpMode is running
+        pservo.setPosition(0.45);
         telemetry.log().add("Entering opModeIsactive");
         while (opModeIsActive()) {
 
@@ -67,12 +70,22 @@ public class REV_1 extends LinearOpMode {
 
             // Pollen pusher servo logic
             if (gamepad1.y) {
-                telemetry.log().add("set position 1.0");
-                pservo.setPosition(0.3);
-            } else if (gamepad1.x || gamepad1.b) {
-                pservo.setPosition(0.0);
-                telemetry.log().add("set position 0.0");
+                pservo.setPosition(0.45);
+                telemetry.addData("Command", "A");
 
+            } else if (gamepad1.a) {
+                pservo.setPosition(pservo.getPosition() - 0.1);
+                telemetry.addData("Command", "X");
+            }
+            //feedo logic
+            
+            if (gamepad1.dpadUpWasPressed()) {
+                feedo.setPosition(1.0);
+                telemetry.addData("Command", "Up");
+
+            } else if (gamepad1.dpadDownWasPressed()) {
+                feedo.setPosition(-1.0);
+                telemetry.addData("Command", "Down");
             }
 
             // Send power to the motors
