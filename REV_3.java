@@ -80,11 +80,11 @@ public class REV_3 extends LinearOpMode {
             }
             //feedo logic
             
-            if (gamepad1.dpadUpWasPressed()) {
+            if (gamepad1.dpad_up) {
                 feedo.setPower(1.0);
                 telemetry.addData("Command", "Up");
 
-            } else if (gamepad1.dpadDownWasPressed()) {
+            } else if (gamepad1.dpad_down) {
                 feedo.setPower(-1.0);
                 telemetry.addData("Command", "Down");
             } else {
